@@ -51,6 +51,30 @@
   .prose-hub blockquote {
     @apply border-l-4 border-indigo-500 pl-6 py-2 italic bg-slate-100/50 rounded-r-lg mb-6;
   }
+
+  .prose-hub ol {
+    @apply list-decimal pl-6 space-y-3 mb-6;
+  }
+
+  .prose-hub pre {
+    @apply bg-slate-900 text-slate-100 p-6 rounded-2xl overflow-x-auto mb-6 border border-slate-800 shadow-inner font-mono text-sm leading-relaxed;
+  }
+
+  .prose-hub code {
+    @apply font-mono text-sm bg-slate-100 text-indigo-600 px-1.5 py-0.5 rounded border border-slate-200/60 font-semibold;
+  }
+
+  .prose-hub pre code {
+    @apply bg-transparent text-slate-100 p-0 rounded-none border-0 font-normal;
+  }
+
+  .prose-hub hr {
+    @apply border-t border-slate-200 my-10;
+  }
+
+  .prose-hub a {
+    @apply text-indigo-600 hover:text-indigo-800 underline decoration-indigo-200 hover:decoration-indigo-500 transition-all font-medium;
+  }
 }
 
 /* Custom Animations for the Polish Phase */

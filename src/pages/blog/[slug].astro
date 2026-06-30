@@ -1,5 +1,5 @@
 ---
-import { getCollection, getEntry } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { getProjectWithSkills } from '../../lib/graph';
 import ProjectCard from '../../components/ProjectCard.astro';
@@ -24,6 +24,8 @@ let linkedProject = null;
 if (article.data.project_id) {
 	linkedProject = await getProjectWithSkills(article.data.project_id);
 }
+
+const { Content } = await render(article);
 ---
 
 <Layout title={`${article.data.title} — Hub de Crédibilité`}>
@@ -50,7 +52,7 @@ if (article.data.project_id) {
 		</header>
 
 		<article class="prose-hub mb-20">
-			{article.body}
+			<Content />
 		</article>
 
 		{linkedProject && (
