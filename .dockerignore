@@ -1,0 +1,8 @@
+node_modules
+.astro
+dist
+.git
+.env
+platform/
+conception-complet/
+ARCHITECTURE_INDEX.md

@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { getSkillWithProofs } from '../lib/graph';
+import SkillChip from '../components/SkillChip.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const competencies = await getCollection('competencies');
+---
+
+<Layout title="Compétences & Preuves — Hub de Crédibilité">
+	<main class="max-w-5xl mx-auto px-6 py-20 animate-content">
+		<header class="mb-16 text-center">
+			<h1 class="text-4xl font-bold tracking-tight text-slate-900 mb-4">
+				Expertises & Preuves
+			</h1>
+			<p class="text-lg text-slate-600 max-w-2xl mx-auto">
+				Explorez mes domaines de compétences. Chaque expertise est appuyée par des réalisations concrètes et des sources de vérité vérifiables.
+			</p>
+		</header>
+
+		<div class="space-y-20">
+			{competencies.map(async (comp) => {
+				const skillData = await getSkillWithProofs(comp.id);
+				if (!skillData) return null;
+
+				return (
+					<section class="animate-in fade-in slide-in-from-bottom-4 duration-700">
+						<div class="flex items-center gap-4 mb-8 border-b border-slate-200 pb-4">
+							<SkillChip name={comp.data.name} level={comp.data.level} />
+							<h2 class="text-2xl font-bold text-slate-900">{comp.data.name}</h2>
+						</div>
+
+						<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+							{skillData.projects.length > 0 ? (
+								skillData.projects.map(project => (
+									<ProjectCard
+										title={project.data.title}
+										context={project.data.context}
+										problem={project.data.problem_statement}
+										solution={project.data.solution_description}
+										role={project.data.role}
+										status={project.data.status}
+										featured={project.data.featured}
+										skills={
+											project.skills.map(s => ({ name: s.data.name, level: s.data.level }))
+										}
+										proofs={project.data.proofs}
+									/>
+								))
+							) : (
+								<div class="col-span-full p-8 border-2 border-dashed border-slate-200 rounded-xl text-center text-slate-400 italic">
+									Aucun projet lié à cette compétence pour le moment.
+								</div>
+							)}
+						</div>
+					</section>
+				);
+			})}
+		</div>
+	</main>
+</Layout>

@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const articles = await getCollection('blog');
+const sortedArticles = articles.sort((a, b) => b.data.published_at.getTime() - a.data.published_at.getTime());
+---
+
+<Layout title="Expériences & Réflexions — Hub de Crédibilité">
+	<main class="max-w-4xl mx-auto px-6 py-20 animate-content">
+		<header class="mb-16 text-center">
+			<h1 class="text-4xl font-bold tracking-tight text-slate-900 mb-4">
+				Réflexions & Retours d'Expérience
+			</h1>
+			<p class="text-lg text-slate-600 max-w-2xl mx-auto">
+				Ici, je documente mon cheminement, mes erreurs et mes analyses techniques pour transformer l'expérience en savoir partageable.
+			</p>
+		</header>
+
+		<div class="grid gap-12">
+			{sortedArticles.map(article => (
+				<article class="group relative pl-8 border-l-2 border-slate-200 hover:border-indigo-500 transition-colors">
+					<div class="flex items-center gap-3 mb-2">
+						<span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-0.5 rounded">
+							{article.data.type}
+						</span>
+						<time class="text-xs text-slate-400">
+							{article.data.published_at.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+						</time>
+					</div>
+
+					<h2 class="text-2xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors mb-3">
+						<a href={`/blog/${article.id}`}>
+							{article.data.title}
+						</a>
+					</h2>
+
+					<div class="flex flex-wrap gap-2 mb-4">
+						{article.data.tags.map(tag => (
+							<span class="text-xs text-slate-500 bg-slate-50 px-2 py-1 rounded border border-slate-100">
+								#{tag}
+							</span>
+						))}
+					</div>
+
+					<a href={`/blog/${article.id}`} class="text-sm font-medium text-indigo-600 hover:text-indigo-800 inline-flex items-center gap-1">
+						Lire la réflexion
+						<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+						</svg>
+					</a>
+				</article>
+			))}
+		</div>
+	</main>
+</Layout>

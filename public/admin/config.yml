@@ -1,0 +1,83 @@
+backend:
+  name: git-gateway
+  branch: main
+
+# Enable local backend proxy for local development (run 'npx decap-cms-proxy-server' in the root)
+local_backend: true
+
+media_folder: "public/images/uploads" # Where uploaded images are saved
+public_folder: "/images/uploads"     # Where Astro points to uploaded images
+
+collections:
+  - name: "competencies"
+    label: "Compétences"
+    folder: "src/content/competencies"
+    create: true
+    slug: "{{id}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "ID de la compétence", name: "id", widget: "string", hint: "Identifiant unique (ex: system-engineering)" }
+      - { label: "Nom", name: "name", widget: "string" }
+      - { label: "Description", name: "description", widget: "string" }
+      - { label: "Niveau d'expertise", name: "level", widget: "select", options: ["Learning", "Proficient", "Expert"] }
+      - { label: "Catégorie", name: "category", widget: "string", hint: "Catégorie d'expertise (ex: Frontend, Strategy...)" }
+      - { label: "Contenu", name: "body", widget: "markdown", required: false }
+
+  - name: "projects"
+    label: "Projets (Portfolio)"
+    folder: "src/content/projects"
+    create: true
+    slug: "{{id}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "ID du projet", name: "id", widget: "string", hint: "Identifiant unique (ex: microservices-payment)" }
+      - { label: "Titre du projet", name: "title", widget: "string" }
+      - { label: "Contexte", name: "context", widget: "string" }
+      - { label: "Problématique (Le Défi)", name: "problem_statement", widget: "string" }
+      - { label: "Solution apportée", name: "solution_description", widget: "string" }
+      - { label: "Rôle joué", name: "role", widget: "string" }
+      - { label: "Statut", name: "status", widget: "select", options: ["InProgress", "Completed", "Archived"] }
+      - { label: "Date de début", name: "start_date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - { label: "Date de fin (Optionnel)", name: "end_date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD", required: false }
+      - { label: "Mis en avant (Page d'accueil/Phares)", name: "featured", widget: "boolean", default: false }
+      - label: "Compétences mobilisées"
+        name: "skills"
+        widget: "relation"
+        collection: "competencies"
+        search_fields: ["name"]
+        value_field: "id"
+        display_fields: ["name"]
+        multiple: true
+      - label: "Preuves de réalisation"
+        name: "proofs"
+        widget: "list"
+        fields:
+          - { label: "Type de preuve", name: "type", widget: "select", options: ["GitHub", "LiveDemo", "CaseStudy", "Certification"] }
+          - { label: "URL", name: "url", widget: "string" }
+          - { label: "Label du lien", name: "label", widget: "string" }
+      - { label: "Description détaillée / Étude de cas", name: "body", widget: "markdown", required: false }
+
+  - name: "blog"
+    label: "Articles de blog"
+    folder: "src/content/blog"
+    create: true
+    slug: "{{id}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - { label: "ID de l'article", name: "id", widget: "string", hint: "Identifiant unique pour l'URL (ex: intro-decap-cms)" }
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Type d'article", name: "type", widget: "select", options: ["Retrospective", "Tutorial", "Analysis", "Note"] }
+      - { label: "Date de publication", name: "published_at", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+      - label: "Projet lié (Optionnel)"
+        name: "project_id"
+        widget: "relation"
+        collection: "projects"
+        search_fields: ["title"]
+        value_field: "id"
+        display_fields: ["title"]
+        required: false
+      - { label: "Mots-clés (Tags)", name: "tags", widget: "list", default: [] }
+      - { label: "Contenu de l'article", name: "body", widget: "markdown" }

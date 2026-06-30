@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+
+interface Props {
+  placeholder?: string;
+}
+
+const { placeholder = "Rechercher un projet, une compétence ou une réflexion..." } = Astro.props;
+
+// Fetch collections on the server side during rendering/build
+const [projects, competencies, blog] = await Promise.all([
+  getCollection('projects'),
+  getCollection('competencies'),
+  getCollection('blog')
+]);
+
+const searchIndex = [
+  ...projects.map(p => ({ id: p.id, title: p.data.title, type: 'Projet', url: `/projects` })),
+  ...competencies.map(c => ({ id: c.id, title: c.data.name, type: 'Compétence', url: `/competencies` })),
+  ...blog.map(b => ({ id: b.id, title: b.data.title, type: 'Article', url: `/blog/${b.id}` })),
+];
+---
+
+<div class="relative max-w-xl mx-auto mb-12 group" id="search-wrapper" data-search-index={JSON.stringify(searchIndex)}>
+  <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 group-focus-within:text-indigo-600 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m0-0l6-6m-6 6H3" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9" />
+    </svg>
+  </div>
+  <input
+    type="text"
+    id="global-search"
+    placeholder={placeholder}
+    class="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl text-slate-900 shadow-sm focus:ring-4 focus:ring-indigo-500/10 focus:border-indigo-500 outline-none transition-all duration-200 text-lg"
+  />
+  <div id="search-results" class="absolute top-full left-0 right-0 mt-2 max-h-[60vh] overflow-y-auto bg-white border border-slate-200 rounded-2xl shadow-xl z-50 hidden">
+    <!-- Results injected here -->
+  </div>
+</div>
+
+<script>
+  function initSearch() {
+    const searchWrapper = document.getElementById('search-wrapper');
+    const searchInput = document.getElementById('global-search');
+    const resultsContainer = document.getElementById('search-results');
+
+    if (!searchWrapper || !searchInput || !resultsContainer) return;
+
+    // Get the index pre-rendered on the server via data attribute
+    const index = JSON.parse(searchWrapper.getAttribute('data-search-index') || '[]');
+
+    searchInput.addEventListener('input', (e) => {
+      const query = (e.target as HTMLInputElement).value.toLowerCase();
+      if (query.length < 2) {
+        resultsContainer.classList.add('hidden');
+        return;
+      }
+
+      const filtered = index.filter((item: any) =>
+        item.title.toLowerCase().includes(query) ||
+        item.type.toLowerCase().includes(query)
+      );
+
+      if (filtered.length > 0) {
+        resultsContainer.innerHTML = filtered.map((item: any) => `
+          <a href="${item.url}" class="flex items-center gap-3 p-4 hover:bg-slate-50 transition-colors border-b border-slate-100 last:border-0">
+            <span class="text-[10px] font-bold uppercase px-1.5 py-0.5 rounded bg-slate-100 text-slate-500">${item.type}</span>
+            <span class="text-sm font-medium text-slate-900">${item.title}</span>
+          </a>
+        `).join('');
+        resultsContainer.classList.remove('hidden');
+      } else {
+        resultsContainer.innerHTML = `<div class="p-8 text-center text-slate-400 text-sm italic">Aucun résultat trouvé</div>`;
+        resultsContainer.classList.remove('hidden');
+      }
+    });
+
+    // Close search when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!searchInput.contains(e.target as Node) && !resultsContainer.contains(e.target as Node)) {
+        resultsContainer.classList.add('hidden');
+      }
+    });
+  }
+
+  initSearch();
+  // Re-run on view transitions/client routing
+  document.addEventListener('astro:after-swap', initSearch);
+</script>

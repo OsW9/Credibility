@@ -1,0 +1,64 @@
+---
+import SkillChip from './SkillChip.astro';
+import ProofBadge from './ProofBadge.astro';
+
+interface Props {
+  title: string;
+  context: string;
+  problem: string;
+  solution: string;
+  role: string;
+  status: string;
+  skills: Array<{ name: string, level: string }>;
+  proofs: Array<{ type: any, url: string, label: string }>;
+  featured?: boolean;
+}
+
+const { title, context, problem, solution, role, status, skills, proofs, featured } = Astro.props;
+---
+
+<div class={`group relative p-6 rounded-2xl border transition-all duration-300 ${featured ? 'bg-white border-slate-200 shadow-sm hover:shadow-md hover:border-indigo-200 ring-1 ring-slate-200' : 'bg-slate-50/50 border-slate-100 hover:bg-white hover:border-slate-200'}`}>
+  <div class="flex justify-between items-start mb-5">
+    <h3 class="text-xl font-bold tracking-tight text-slate-900 group-hover:text-indigo-600 transition-colors">
+      {title}
+    </h3>
+    <span class="text-[10px] font-bold uppercase tracking-widest text-slate-400 bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+      {status}
+    </span>
+  </div>
+
+  <div class="space-y-5 mb-8">
+    <div class="text-sm text-slate-600 leading-relaxed">
+      <span class="text-slate-400 font-medium text-xs uppercase tracking-wider block mb-1">Contexte</span>
+      {context}
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 bg-white rounded-xl border border-slate-100 shadow-inner">
+      <div class="space-y-1">
+        <span class="text-[11px] font-bold uppercase text-slate-400 block">Le Défi</span>
+        <p class="text-xs text-slate-700 italic leading-relaxed">{problem}</p>
+      </div>
+      <div class="space-y-1">
+        <span class="text-[11px] font-bold uppercase text-slate-400 block">La Solution</span>
+        <p class="text-xs text-slate-700 leading-relaxed">{solution}</p>
+      </div>
+    </div>
+
+    <div class="text-xs text-slate-500 flex items-center gap-2">
+      <span class="opacity-60">Rôle :</span>
+      <span class="font-semibold text-slate-700">{role}</span>
+    </div>
+  </div>
+
+  <div class="flex flex-wrap gap-2 mb-8">
+    {skills.map(skill => (
+      <SkillChip name={skill.name} level={skill.level} />
+    ))}
+  </div>
+
+  <div class="pt-5 border-t border-slate-100 flex flex-wrap gap-3">
+    {proofs.map(proof => (
+      <ProofBadge type={proof.type} url={proof.url} label={proof.label} />
+    ))}
+  </div>
+</div>

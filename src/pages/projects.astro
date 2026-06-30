@@ -1,0 +1,113 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+import { getProjectWithSkills } from '../lib/graph';
+import ProjectCard from '../components/ProjectCard.astro';
+import SkillFilter from '../components/SkillFilter.astro';
+
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects.filter(p => p.data.featured);
+const otherProjects = allProjects.filter(p => !p.data.featured);
+
+const featuredResolved = await Promise.all(
+  featuredProjects.map(async (p) => ({
+    ...p,
+    fullData: await getProjectWithSkills(p.id)
+  }))
+);
+
+const otherResolved = await Promise.all(
+  otherProjects.map(async (p) => ({
+    ...p,
+    fullData: await getProjectWithSkills(p.id)
+  }))
+);
+
+const skillsPerProject = await Promise.all(
+  allProjects.map(async (p) => {
+    const res = await getProjectWithSkills(p.id);
+    return res.skills.map(s => ({ id: s.id, name: s.data.name, level: s.data.level }));
+  })
+);
+
+const flatSkills = skillsPerProject.flat();
+const uniqueSkillsMap = new Map();
+flatSkills.forEach(s => uniqueSkillsMap.set(s.id, s));
+const uniqueSkills = Array.from(uniqueSkillsMap.values()).sort((a, b) => a.name.localeCompare(b.name));
+---
+
+<Layout title="Portfolio & Réalisations — Hub de Crédibilité">
+	<main class="max-w-6xl mx-auto px-6 py-20 animate-content">
+		<header class="mb-16 text-center">
+			<h1 class="text-4xl font-bold tracking-tight text-slate-900 mb-4">
+				Réalisations & Preuves
+			</h1>
+			<p class="text-lg text-slate-600 max-w-2xl mx-auto">
+				L'ensemble de mes travaux, classés par impact et validés par des sources de vérité externes.
+			</p>
+		</header>
+
+		<!-- Dynamic Filter System -->
+		<SkillFilter skills={uniqueSkills} />
+
+		<section class="mb-20">
+			<div class="flex items-center gap-4 mb-8">
+				<div class="h-px flex-1 bg-slate-200"></div>
+				<h2 class="text-sm font-bold uppercase tracking-widest text-slate-400">Projets Phares</h2>
+				<div class="h-px flex-1 bg-slate-200"></div>
+			</div>
+			<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+				{featuredResolved.map(project => (
+					<div class="project-card" data-skills={project.fullData.data.skills.join(',')}>
+						<ProjectCard
+							title={project.fullData.data.title}
+							context={project.fullData.data.context}
+							problem={project.fullData.data.problem_statement}
+							solution={project.fullData.data.solution_description}
+							role={project.fullData.data.role}
+							status={project.fullData.data.status}
+							featured={true}
+							skills={
+								project.fullData.skills.map(s => ({
+									name: s.data.name,
+									level: s.data.level
+								}))
+							}
+							proofs={project.fullData.data.proofs}
+						/>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<section>
+			<div class="flex items-center gap-4 mb-8">
+				<div class="h-px flex-1 bg-slate-200"></div>
+				<h2 class="text-sm font-bold uppercase tracking-widest text-slate-400">Autres Réalisations</h2>
+				<div class="h-px flex-1 bg-slate-200"></div>
+			</div>
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+				{otherResolved.map(project => (
+					<div class="project-card" data-skills={project.fullData.data.skills.join(',')}>
+						<ProjectCard
+							title={project.fullData.data.title}
+							context={project.fullData.data.context}
+							problem={project.fullData.data.problem_statement}
+							solution={project.fullData.data.solution_description}
+							role={project.fullData.data.role}
+							status={project.fullData.data.status}
+							featured={false}
+							skills={
+								project.fullData.skills.map(s => ({
+									name: s.data.name,
+									level: s.data.level
+								}))
+							}
+							proofs={project.fullData.data.proofs}
+						/>
+					</div>
+				))}
+			</div>
+		</section>
+	</main>
+</Layout>

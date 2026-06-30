@@ -1,0 +1,23 @@
+---
+interface Props {
+  name: string;
+  level: 'Learning' | 'Proficient' | 'Expert';
+}
+
+const { name, level } = Astro.props;
+
+const levelStyles = {
+  Learning: 'bg-blue-50 text-blue-600 border-blue-100',
+  Proficient: 'bg-indigo-50 text-indigo-600 border-indigo-100',
+  Expert: 'bg-purple-50 text-purple-600 border-purple-100',
+};
+---
+
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-semibold border transition-all duration-200 hover:brightness-95 cursor-default"
+      style={`background-color: var(--tw-bg-color); color: var(--tw-text-color); border-color: var(--tw-border-color);`}
+      class:list={[levelStyles[level]]}>
+  {name}
+  <span class="ml-1.5 opacity-60 text-[9px] uppercase tracking-tighter font-bold">
+    {level}
+  </span>
+</span>

@@ -1,0 +1,41 @@
+---
+import Layout from '../layouts/Layout.astro';
+import GlobalSearch from '../components/GlobalSearch.astro';
+---
+
+<Layout title="Accueil — Hub de Crédibilité">
+	<main class="max-w-4xl mx-auto px-6 py-20 text-center animate-content">
+		<header class="mb-16 space-y-6">
+			<h1 class="text-6xl font-extrabold tracking-tighter text-slate-900 mb-4">
+				Hub<span class="text-indigo-600">.</span>Crédibilité
+			</h1>
+			<p class="text-xl text-slate-600 max-w-2xl mx-auto leading-relaxed">
+				L'intersection entre l'ingénierie système et la réalisation technique. <br/>
+				<span class="text-slate-400 font-medium">Je transforme l'expérience brute en preuves vérifiables.</span>
+			</p>
+		</header>
+
+		<!-- Global Search Section -->
+		<div class="mb-24">
+			<GlobalSearch placeholder="Rechercher un projet, une compétence ou une réflexion..." />
+		</div>
+
+		<div class="flex justify-center gap-6">
+			<a href="/projects" class="group inline-flex items-center gap-2 px-8 py-4 bg-slate-900 text-white rounded-2xl font-semibold hover:bg-indigo-600 transition-all duration-300 shadow-xl shadow-slate-200 active:scale-95">
+				Explorer le Portfolio
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+				</svg>
+			</a>
+			<a href="/competencies" class="inline-flex items-center gap-2 px-8 py-4 bg-white text-slate-900 border border-slate-200 rounded-2xl font-semibold hover:border-indigo-500 hover:text-indigo-600 transition-all duration-300 shadow-sm active:scale-95">
+				Voir les Expertises
+			</a>
+		</div>
+
+		<footer class="mt-32 pt-12 border-t border-slate-100">
+			<p class="text-xs text-slate-400 font-medium uppercase tracking-widest">
+				Savoir → Preuve → Confiance
+			</p>
+		</footer>
+	</main>
+</Layout>

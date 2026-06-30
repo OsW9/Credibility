@@ -1,0 +1,27 @@
+{
+  "name": "Credibility Hub (Precision Engineering)",
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "editor.formatOnSave": true,
+        "files.associations": {
+          "*.astro": "astro"
+        }
+      },
+      "extensions": [
+        "astro-build.astro-vscode",
+        "tailwindlabs.tailwindcss",
+        "dbaumann.tailwindcss-intellisense",
+        "esbenp.prettier-vscode"
+      ]
+    }
+  },
+  "forwardPorts": [4321],
+  "workspaceFolder": "/workspaces/platform",
+  "remoteUser": "root",
+  "postCreateCommand": "bash .devcontainer/postCreate.sh"
+}

@@ -1,0 +1,31 @@
+---
+interface Props {
+  type: 'GitHub' | 'LiveDemo' | 'CaseStudy' | 'Certification';
+  url: string;
+  label: string;
+}
+
+const { type, url, label } = Astro.props;
+
+const typeConfig = {
+  GitHub: { icon: 'GH', color: 'text-slate-900 bg-slate-100' },
+  LiveDemo: { icon: 'LIVE', color: 'text-indigo-600 bg-indigo-50' },
+  CaseStudy: { icon: 'CS', color: 'text-emerald-600 bg-emerald-50' },
+  Certification: { icon: 'CERT', color: 'text-amber-600 bg-amber-50' },
+};
+---
+
+<a
+  href={url}
+  target="_blank"
+  rel="noopener noreferrer"
+  class="group inline-flex items-center px-3 py-1.5 text-xs font-medium text-slate-600 bg-white border border-slate-200 rounded-lg hover:border-indigo-300 hover:text-indigo-600 transition-all duration-200 shadow-sm active:scale-95"
+>
+  <span class={`mr-2 text-[9px] font-black uppercase tracking-tighter px-1.5 py-0.5 rounded ${typeConfig[type].color}`}>
+    {typeConfig[type].icon}
+  </span>
+  {label}
+  <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 ml-1.5 opacity-40 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3" />
+  </svg>
+</a>

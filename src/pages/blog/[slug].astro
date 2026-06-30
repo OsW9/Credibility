@@ -1,0 +1,95 @@
+---
+import { getCollection, getEntry } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import { getProjectWithSkills } from '../../lib/graph';
+import ProjectCard from '../../components/ProjectCard.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry },
+  }));
+}
+
+const { slug } = Astro.params;
+const article = Astro.props.entry || (slug ? await getEntry('blog', slug) : null);
+
+if (!article) {
+	return Astro.redirect('/404');
+}
+
+// If the article is linked to a project, we fetch the full project data
+let linkedProject = null;
+if (article.data.project_id) {
+	linkedProject = await getProjectWithSkills(article.data.project_id);
+}
+---
+
+<Layout title={`${article.data.title} — Hub de Crédibilité`}>
+	<main class="max-w-3xl mx-auto px-6 py-20">
+		<header class="mb-12">
+			<div class="flex items-center gap-3 mb-4">
+				<span class="text-xs font-bold uppercase tracking-widest text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded">
+					{article.data.type}
+				</span>
+				<time class="text-sm text-slate-400">
+					{article.data.published_at.toLocaleDateString('fr-FR', { year: 'numeric', month: 'long', day: 'numeric' })}
+				</time>
+			</div>
+			<h1 class="text-4xl font-extrabold tracking-tight text-slate-900 mb-6">
+				{article.data.title}
+			</h1>
+			<div class="flex flex-wrap gap-2">
+				{article.data.tags.map(tag => (
+					<span class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded">
+						#{tag}
+					</span>
+				))}
+			</div>
+		</header>
+
+		<article class="prose-hub mb-20">
+			{article.body}
+		</article>
+
+		{linkedProject && (
+			<section class="p-8 bg-indigo-50 border border-indigo-100 rounded-2xl">
+				<h3 class="text-lg font-bold text-indigo-900 mb-4 flex items-center gap-2">
+					<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4hC0.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+					</svg>
+					Lien avec une réalisation concrète
+				</h3>
+				<p class="text-sm text-indigo-700 mb-6">
+					Cet article est lié au projet <strong class="text-indigo-900">{linkedProject.data.title}</strong>. Vous pouvez consulter la mise en œuvre technique et les preuves associées ci-dessous.
+				</p>
+				<ProjectCard
+					title={linkedProject.data.title}
+					context={linkedProject.data.context}
+					problem={linkedProject.data.problem_statement}
+					solution={linkedProject.data.solution_description}
+					role={linkedProject.data.role}
+					status={linkedProject.data.status}
+					featured={linkedProject.data.featured}
+					skills={
+						linkedProject.skills.map(s => ({
+							name: s.data.name,
+							level: s.data.level
+						}))
+					}
+					proofs={linkedProject.data.proofs}
+				/>
+			</section>
+		)}
+
+		<footer class="mt-12 pt-8 border-t border-slate-200 text-center">
+			<a href="/blog" class="text-indigo-600 font-medium hover:text-indigo-800 flex items-center justify-center gap-2">
+				<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+				</svg>
+				Retour aux réflexions
+			</a>
+		</footer>
+	</main>
+</Layout>

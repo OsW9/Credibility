@@ -1,0 +1,182 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const email = "oswiser9@gmail.cm";
+const githubUrl = "https://github.com/OsW9";
+const linkedinUrl = "https://linkedin.com"; // Remplacer par votre lien LinkedIn
+---
+
+<Layout title="Contact — Hub de Crédibilité">
+	<main class="max-w-3xl mx-auto px-6 py-20">
+		<header class="mb-16 text-center">
+			<h1 class="text-4xl font-bold tracking-tight text-slate-900 mb-4">
+				Démarrons une Conversation
+			</h1>
+			<p class="text-lg text-slate-600 leading-relaxed">
+				Que ce soit pour une opportunité professionnelle, une question technique ou une proposition de collaboration, je suis ouvert aux échanges constructifs.
+			</p>
+		</header>
+
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+			<!-- Left Column: Info -->
+			<div class="md:col-span-1 space-y-8">
+				<div class="p-6 rounded-2xl bg-slate-50 border border-slate-100">
+					<h3 class="text-sm font-bold uppercase tracking-widest text-slate-400 mb-4">Me contacter</h3>
+					<ul class="space-y-4">
+						<li>
+							<a href={`mailto:${email}`} class="flex items-center gap-3 text-slate-600 hover:text-indigo-600 transition-colors group">
+								<div class="h-8 w-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:border-indigo-300 group-hover:text-indigo-600 group-hover:bg-indigo-50/55 transition-all">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+									</svg>
+								</div>
+								<span class="text-sm font-medium">Email professionnel</span>
+							</a>
+						</li>
+						<li>
+							<a href={linkedinUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-slate-600 hover:text-indigo-600 transition-colors group">
+								<div class="h-8 w-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:border-indigo-300 group-hover:text-indigo-600 group-hover:bg-indigo-50/55 transition-all">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h12v-7z" />
+									</svg>
+								</div>
+								<span class="text-sm font-medium">LinkedIn</span>
+							</a>
+						</li>
+						<li>
+							<a href={githubUrl} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-slate-600 hover:text-indigo-600 transition-colors group">
+								<div class="h-8 w-8 rounded-full bg-white border border-slate-200 flex items-center justify-center text-slate-400 group-hover:border-indigo-300 group-hover:text-indigo-600 group-hover:bg-indigo-50/55 transition-all">
+									<svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H4a2 2 0 01-2-2V5a2 2 0 012-2h5.582l4.522 4.522A1 1 0 0011.828 5H12a2 2 0 012 2v10a2 2 0 01-2 2z" />
+									</svg>
+								</div>
+								<span class="text-sm font-medium">GitHub</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="p-6 rounded-2xl bg-indigo-600 text-white shadow-lg shadow-indigo-200">
+					<h4 class="font-bold mb-2 text-sm uppercase tracking-wider opacity-80">Note rapide</h4>
+					<p class="text-xs leading-relaxed opacity-90">
+						Je privilégie la qualité des échanges à la quantité. N'hésitez pas à être précis dans vos demandes pour un retour plus rapide.
+					</p>
+				</div>
+			</div>
+
+			<!-- Right Column: Form -->
+			<div class="md:col-span-2">
+				<form
+					id="contact-form"
+					action="https://formspree.io/f/your-id"
+					method="POST"
+					class="space-y-6 bg-white p-8 rounded-2xl border border-slate-200 shadow-sm"
+				>
+					<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+						<div class="space-y-2">
+							<label for="name" class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Nom complet</label>
+							<input
+								type="text"
+								id="name"
+								name="name"
+								placeholder="Jean Dupont"
+								class="w-full px-4 py-2 rounded-lg border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+								required
+							/>
+						</div>
+						<div class="space-y-2">
+							<label for="email" class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Email professionnel</label>
+							<input
+								type="email"
+								id="email"
+								name="email"
+								placeholder="jean@company.com"
+								class="w-full px-4 py-2 rounded-lg border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+								required
+							/>
+						</div>
+					</div>
+
+					<div class="space-y-2">
+						<label for="subject" class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Sujet</label>
+						<select
+							id="subject"
+							name="subject"
+							class="w-full px-4 py-2 rounded-lg border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+						>
+							<option value="opportunité">Opportunité Professionnelle</option>
+							<option value="collaboration">Proposition de Collaboration</option>
+							<option value="question">Question Technique / Conseil</option>
+							<option value="autre">Autre</option>
+						</select>
+					</div>
+
+					<div class="space-y-2">
+						<label for="message" class="text-xs font-bold uppercase tracking-wider text-slate-400 block">Message</label>
+						<textarea
+							id="message"
+							name="message"
+							rows="5"
+							placeholder="Décrivez votre besoin ou votre idée..."
+							class="w-full px-4 py-2 rounded-lg border border-slate-200 text-slate-900 focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all"
+							required
+						></textarea>
+					</div>
+
+					<button
+						type="submit"
+						id="submit-btn"
+						class="w-full py-3 bg-slate-900 text-white rounded-lg font-semibold hover:bg-indigo-600 transition-all duration-300 active:scale-95 shadow-md"
+					>
+						Envoyer le message
+					</button>
+				</form>
+			</div>
+		</div>
+	</main>
+</Layout>
+
+<script>
+  const form = document.getElementById('contact-form');
+  const btn = document.getElementById('submit-btn');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const originalText = btn.textContent;
+
+    btn.disabled = true;
+    btn.textContent = 'Envoi en cours...';
+    btn.classList.add('opacity-70', 'cursor-not-allowed');
+
+    const formData = new FormData(form);
+
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        btn.textContent = 'Message envoyé ! ✓';
+        btn.classList.replace('bg-slate-900', 'bg-emerald-600');
+        form.reset();
+      } else {
+        throw new Error('Erreur lors de l\'envoi');
+      }
+    } catch (err) {
+      btn.textContent = 'Erreur d\'envoi. Réessayez.';
+      btn.classList.replace('bg-slate-900', 'bg-red-600');
+    } finally {
+      setTimeout(() => {
+        btn.disabled = false;
+        btn.textContent = originalText;
+        btn.classList.remove('opacity-70', 'cursor-not-allowed');
+        btn.classList.replace('bg-emerald-600', 'bg-slate-900');
+        btnL.classList.replace('bg-red-600', 'bg-slate-900');
+      }, 5000);
+    }
+  });
+</script>

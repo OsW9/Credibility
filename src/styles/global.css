@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  h1 {
+    @apply text-4xl font-extrabold tracking-tight text-slate-900 mb-6;
+  }
+
+  h2 {
+    @apply text-2xl font-bold tracking-tight text-slate-900 mb-4;
+  }
+
+  h3 {
+    @apply text-xl font-semibold tracking-tight text-slate-800 mb-3;
+  }
+}
+
+@layer components {
+  .prose-hub {
+    @apply max-w-none leading-relaxed text-slate-700;
+  }
+
+  .prose-hub p {
+    @apply mb-6 leading-relaxed text-base md:text-lg;
+  }
+
+  .prose-hub h2 {
+    @apply text-2xl font-bold text-slate-900 mt-12 mb-6 pb-2 border-b border-slate-100;
+  }
+
+  .prose-hub h3 {
+    @apply text-xl font-semibold text-slate-800 mt-8 mb-4;
+  }
+
+  .prose-hub ul {
+    @apply list-disc pl-6 space-y-3 mb-6;
+  }
+
+  .prose-hub li {
+    @apply leading-relaxed;
+  }
+
+  .prose-hub strong {
+    @apply text-slate-900 font-semibold;
+  }
+
+  .prose-hub blockquote {
+    @apply border-l-4 border-indigo-500 pl-6 py-2 italic bg-slate-100/50 rounded-r-lg mb-6;
+  }
+}
+
+/* Custom Animations for the Polish Phase */
+@keyframes slide-up-fade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-content {
+  animation: slide-up-fade 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
