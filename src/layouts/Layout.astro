@@ -6,6 +6,7 @@ interface Props {
 }
 
 const { title } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <!doctype html>
@@ -26,12 +27,12 @@ const { title } = Astro.props;
 				<a href="/" class="text-lg font-bold tracking-tighter text-slate-900 hover:text-indigo-600 transition-colors">
 					Hub<span class="text-indigo-600">.</span>Crédibilité
 				</a>
-				<div class="flex items-center gap-6 text-sm font-medium text-slate-600">
-					<a href="/competencies" class="hover:text-indigo-600 transition-colors">Compétences</a>
-					<a href="/projects" class="hover:text-indigo-600 transition-colors">Portfolio</a>
-					<a href="/blog" class="hover:text-indigo-600 transition-colors">Réflexions</a>
-					<a href="/about" class="hover:text-indigo-600 transition-colors">À propos</a>
-					<a href="/contact" class="hover:text-indigo-600 transition-colors">Contact</a>
+				<div class="flex items-center gap-6 text-sm font-medium">
+					<a href="/competencies" class={currentPath.startsWith('/competencies') ? "text-indigo-600 font-semibold" : "text-slate-600 hover:text-indigo-600 transition-colors"}>Compétences</a>
+					<a href="/projects" class={currentPath.startsWith('/projects') ? "text-indigo-600 font-semibold" : "text-slate-600 hover:text-indigo-600 transition-colors"}>Portfolio</a>
+					<a href="/blog" class={currentPath.startsWith('/blog') ? "text-indigo-600 font-semibold" : "text-slate-600 hover:text-indigo-600 transition-colors"}>Réflexions</a>
+					<a href="/about" class={currentPath.startsWith('/about') ? "text-indigo-600 font-semibold" : "text-slate-600 hover:text-indigo-600 transition-colors"}>À propos</a>
+					<a href="/contact" class={currentPath.startsWith('/contact') ? "text-indigo-600 font-semibold" : "text-slate-600 hover:text-indigo-600 transition-colors"}>Contact</a>
 				</div>
 			</div>
 		</nav>

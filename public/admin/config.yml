@@ -1,6 +1,19 @@
+# --- CONFIGURATION DU BACKEND DE PRODUCTION ---
+# Option 1 : Netlify Identity & Git Gateway (Recommandé par défaut - zéro serveur à configurer)
 backend:
   name: git-gateway
   branch: main
+
+# Option 2 : GitHub Direct (Pour déploiements sur Vercel, GitHub Pages, Render, etc.)
+# Commentez l'Option 1 et décommentez celle-ci si vous utilisez un hébergeur autre que Netlify.
+# Vous devrez déployer un serveur d'authentification OAuth (ex: Vercel/Render en 2 clics).
+# backend:
+#   name: github
+#   repo: OsW9/Credibility
+#   branch: main
+#   base_url: https://your-oauth-gateway.vercel.app
+#   auth_endpoint: api/auth
+
 
 # Enable local backend proxy for local development (run 'npx decap-cms-proxy-server' in the root)
 local_backend: true
