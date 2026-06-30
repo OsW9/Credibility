@@ -1,6 +1,6 @@
 ---
-id: "reculture-togaf"
-title: "Infrastructure Nationale de Continuité (Reculture)"
+id: "sankofa-togaf"
+title: "Sankofa — Infrastructure de Continuité"
 context: "Préservation et valorisation des savoirs patrimoniaux africains, initié au Burkina Faso."
 problem_statement: "Les connaissances patrimoniales (orales, linguistiques, éthiques) sont hautement fragiles et dispersées, sans cadre d'architecture numérique pour en assurer la continuité."
 solution_description: "Modélisation d'une architecture cible en 5 couches alignée sur la phase A de TOGAF ADM, définissant 12 capacités métier clés et un flux de valeur patrimonial complet."
@@ -18,9 +18,9 @@ proofs: [
 ]
 ---
 
-## Modélisation d'Architecture TOGAF ADM — Phase A
+## Modélisation d'Architecture TOGAF ADM — Projet Sankofa
 
-Ce projet documente la **Phase A (Vision d'Architecture)** pour la mise en place d'une infrastructure nationale de continuité des connaissances patrimoniales (Burkina Faso).
+Le **Projet Sankofa** (du concept traditionnel *"retourner puiser dans le passé pour construire l'avenir"*) documente la **Phase A (Vision d'Architecture)** et les phases subséquentes pour la mise en place d'une infrastructure nationale de continuité des connaissances patrimoniales au Burkina Faso.
 
 ### Objectifs Clés
 1. **Pérennisation** : Identifier, collecter et préserver les sources orales et documentaires fragiles.
