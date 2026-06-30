@@ -46,24 +46,13 @@ Pour y répondre, la Phase A de **Sankofa** a formalisé **12 capacités métier
 
 La Vision d'Architecture du projet Sankofa s'articule autour d'un modèle conceptuel strict en 5 couches indépendantes :
 
-```text
-+-------------------------------------------------------------+
-| Layer 5 : Services de Transmission & Valorisation           |
-| (Éducation, Recherche, API Gouvernées, Assistants IA)       |
-+-------------------------------------------------------------+
-| Layer 4 : Services de Connaissance                          |
-| (Indexation, Graphes sémantiques, Variantes, Traductions)   |
-+-------------------------------------------------------------+
-| Layer 3 : Gouvernance & Validation                          |
-| (Validation communautaire, Classification de sensibilité)   |
-+-------------------------------------------------------------+
-| Layer 2 : Patrimoine Numérique                              |
-| (Originaux immuables, Métadonnées de provenance)            |
-+-------------------------------------------------------------+
-| Layer 1 : Sources Patrimoniales                             |
-| (Détenteurs physiques, Communautés, Institutions)           |
-+-------------------------------------------------------------+
-```
+| Couche | Nom de la Couche | Composants & Services Cibles | Objectif & Portée |
+| :---: | :--- | :--- | :--- |
+| **5** | **Transmission & Valorisation** | Éducation, Recherche, API gouvernées, Assistants IA | Restitution et réutilisation responsable des savoirs |
+| **4** | **Services de Connaissance** | Moteur de recherche, Graphes sémantiques, Taxonomies, Traductions | Structuration, variantes et contextualisation des concepts |
+| **3** | **Gouvernance Patrimoniale** | Processus de validation, Droits & consentements, Sensibilité | Contrôle éthique, classification et validation humaine |
+| **2** | **Patrimoine Numérique** | Originaux immuables, Dérivés, Versions, Métadonnées de provenance | Stockage pérenne, traçabilité et intégrité de la donnée |
+| **1** | **Sources Patrimoniales** | Détenteurs physiques, Communautés, Institutions, Collections | Identification et collecte de la matière brute terrain |
 
 ### Description des Couches
 * **Couches 1 & 2 (Préservation)** : Garantissent que la donnée source brute (enregistrement vocal d'un conte traditionnel, par exemple) est conservée sans altération, avec des métadonnées strictes attestant de sa provenance et du consentement associé.
